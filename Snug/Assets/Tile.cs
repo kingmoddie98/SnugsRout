@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Tile {
     // X and Y position in the world
-    int X, Y;
+    public int X { get; private set; }
+    public int Y { get; private set; }
+
 
     // Enum for types of terrain that exist
     // Grass you can build and move on
@@ -13,6 +15,7 @@ public class Tile {
     enum TileType { grass, water }
 
     TileType type;
+ 
 
     //How quickly can units move through this tile
     float moveSpeed;

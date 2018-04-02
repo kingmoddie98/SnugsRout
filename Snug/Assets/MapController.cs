@@ -11,11 +11,23 @@ public class MapController : MonoBehaviour {
 
     public Map gameboard;
 
-	// Use this for initialization
-	void Start () {
+    public static MapController _instance;
+
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Debug.LogError("Muliple Map Controllers Found");
+           
+        }
+        _instance = this;
+    }
+
+    // Use this for initialization
+    void Start () {
 
         // create about 10k tiles
-        gameboard = new Map();
+        gameboard = new Map(100,100);
 
         //Create Gameobject for every tile in the map
         for(int i=0; i < gameboard.width; i++)
