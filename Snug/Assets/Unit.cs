@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour {
     float speed = 20;
     Vector3[] path;
     int targetIndex;
+   
 
     void Start()
     {
