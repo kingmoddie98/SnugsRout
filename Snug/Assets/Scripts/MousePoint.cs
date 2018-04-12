@@ -14,6 +14,9 @@ public class MousePoint : MonoBehaviour {
     private float rayCastLength = 500;
 
     private static Vector3 mouseDownPoint;
+
+    public float autoAttackCurTime;
+    public float autoAttackCooldown;
     
 
     private void Awake()
@@ -22,6 +25,18 @@ public class MousePoint : MonoBehaviour {
     }
     void Update()
     {
+        //if(CurrentlySelectedUnit != null & CurrentlySelectedUnit.gameObject.GetComponent<Unit>().canAttack)
+        //{
+      //      if(autoAttackCurTime < autoAttackCooldown)
+         //   {
+            //    autoAttackCurTime += Time.deltaTime;
+         //   }
+            //else
+           // {
+          //      
+           // }
+        //}
+
         //GameObject target = GameObject.Find("Target");
       
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -62,10 +77,18 @@ public class MousePoint : MonoBehaviour {
                     if (hit.collider.transform.FindChild("Selected"))
                     {
                         Debug.Log("Found a unit");
+                    
 
                         //are we selecting a different object
                         if(CurrentlySelectedUnit != hit.collider.gameObject)
                         {
+                            ///custom attack just added may not work
+                            if (hit.collider.gameObject != null && !(hit.collider.gameObject.GetComponent<Unit>().isFriend))
+                            {
+                                rightClickPoint = hit.collider.gameObject.transform.position;
+                                CurrentlySelectedUnit.gameObject.GetComponent<Unit>().beginAttack(hit.collider.gameObject);
+                            }
+
                             GameObject SelectedObj = hit.collider.transform.FindChild("Selected").gameObject;
                             SelectedObj.active = true;
 
