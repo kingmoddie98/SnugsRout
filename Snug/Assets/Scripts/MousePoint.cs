@@ -80,9 +80,11 @@ public class MousePoint : MonoBehaviour {
                 {
                     Debug.Log("Found an enemy");
 
-                    rightClickPoint = hit.collider.transform.FindChild("Enemy").position;
-                    CurrentlySelectedUnit.gameObject.GetComponent<Unit>().beginAttack(hit.collider.gameObject);
-
+                    if (Input.GetMouseButton(1))
+                    {
+                        rightClickPoint = hit.collider.transform.FindChild("Enemy").position;
+                        CurrentlySelectedUnit.gameObject.GetComponent<Unit>().beginAttack(hit.collider.gameObject);
+                    }
                 }
 
 
