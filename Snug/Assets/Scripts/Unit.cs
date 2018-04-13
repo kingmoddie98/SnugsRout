@@ -25,6 +25,8 @@ public class Unit : MonoBehaviour
 
     public bool canAttack;
 
+    public bool isMelee;
+
     void Start()
     {
         health = startHealth;
@@ -45,12 +47,26 @@ public class Unit : MonoBehaviour
 
     public void beginAttack(GameObject obj)
     {
-
+        Debug.Log("I am attacking " + obj);
+        if (isMelee)
+        {
+            //Debug.Log(Vector2.Distance(this.transform.position, obj.transform.position));
+            if(Vector2.Distance(this.transform.position, obj.transform.position) <= 1)
+            {
+                Debug.Log("I am in range to attack!");
+                obj.GetComponent<Unit>().TakeDamage(10);
+            }
+            //
+        }
+        else if(!isMelee)
+        {
+            obj.GetComponent<Unit>().TakeDamage(20);
+        }
     }
 
     public void Die()
     {
-        GameObject.Destroy(this, 0.0f);
+        GameObject.Destroy(this.gameObject, 0.0f);
     }
 
 

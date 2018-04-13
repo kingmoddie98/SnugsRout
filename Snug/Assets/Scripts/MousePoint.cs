@@ -57,11 +57,14 @@ public class MousePoint : MonoBehaviour {
                 //0 is left mouse 1 right 2 middle
                 if (Input.GetMouseButton(1))
                 {
-                    GameObject TargetObj = Instantiate(Target, hit.point, Quaternion.identity) as GameObject;
-                    TargetObj.name = "Target Instantiated";
-                    rightClickPoint = hit.point;
 
-                    GameObject.Destroy(TargetObj, 2.0f);
+
+                        GameObject TargetObj = Instantiate(Target, hit.point, Quaternion.identity) as GameObject;
+                        TargetObj.name = "Target Instantiated";
+                        rightClickPoint = hit.point;
+
+                        GameObject.Destroy(TargetObj, 2.0f);
+                    
 
                 }
                 else if (Input.GetMouseButtonUp(0) && DidUserClickLeftMouse(mouseDownPoint))
@@ -71,7 +74,20 @@ public class MousePoint : MonoBehaviour {
             }
             else
             {
-                if(Input.GetMouseButtonUp(0) && DidUserClickLeftMouse(mouseDownPoint))
+
+
+                if (hit.collider.transform.FindChild("Enemy"))
+                {
+                    Debug.Log("Found an enemy");
+
+                    rightClickPoint = hit.collider.transform.FindChild("Enemy").position;
+                    CurrentlySelectedUnit.gameObject.GetComponent<Unit>().beginAttack(hit.collider.gameObject);
+
+                }
+
+
+
+                if (Input.GetMouseButtonUp(0) && DidUserClickLeftMouse(mouseDownPoint))
                 {
                     //is user hittign something we can select
                     if (hit.collider.transform.FindChild("Selected"))
@@ -82,12 +98,7 @@ public class MousePoint : MonoBehaviour {
                         //are we selecting a different object
                         if(CurrentlySelectedUnit != hit.collider.gameObject)
                         {
-                            ///custom attack just added may not work
-                            if (hit.collider.gameObject != null && !(hit.collider.gameObject.GetComponent<Unit>().isFriend))
-                            {
-                                rightClickPoint = hit.collider.gameObject.transform.position;
-                                CurrentlySelectedUnit.gameObject.GetComponent<Unit>().beginAttack(hit.collider.gameObject);
-                            }
+                          
 
                             GameObject SelectedObj = hit.collider.transform.FindChild("Selected").gameObject;
                             SelectedObj.active = true;
